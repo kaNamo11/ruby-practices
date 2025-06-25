@@ -17,7 +17,7 @@ puts "#{date_start.month}月#{date_start.year}年".to_s.center(20)
 puts "日 月 火 水 木 金 土"
 print "   " * date_start.wday
 
-(data_start..data_end).each do |data|
+(date_start..date_end).each do |date|
   date_view = date_start.day.to_s.rjust(3)
   if date_start.saturday?
     puts date_view
