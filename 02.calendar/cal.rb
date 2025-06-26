@@ -2,8 +2,8 @@ require 'date'
 require 'optparse'
 
 options = {
-  year:  Date.today.year
-  month: Date.today.month
+  year:  Date.today.year,
+  month: Date.today.month,
 }
 opt = OptionParser.new
 opt.on("-m", "--month MONTH", Integer, "this_month") { |m| options[:month] = m }
@@ -18,10 +18,8 @@ puts "日 月 火 水 木 金 土"
 print "   " * date_start.wday
 
 (date_start..date_end).each do |date|
-  date_view = date_start.day.to_s.rjust(3)
-  if date_start.saturday?
-    puts date_view
-  else
-    print date_view
+  print date.day.to_s.rjust(3)
+  if date.saturday?
+    print "\n"
   end
 end
