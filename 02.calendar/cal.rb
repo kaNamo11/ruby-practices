@@ -19,7 +19,5 @@ print "   " * date_start.wday
 
 (date_start..date_end).each do |date|
   print date.day.to_s.rjust(3)
-  if date.saturday?
-    print "\n"
-  end
+  print "\n" if date.saturday?
 end
