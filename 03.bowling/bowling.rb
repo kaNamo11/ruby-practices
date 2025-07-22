@@ -12,26 +12,31 @@ scores.each do |s|
   end
 end
 
-frames = []
-shots.each_slice(2) do |s|
-  frames << s
-end
+frames = shots.each_slice(2).to_a
 
-point = 0
-frames.slice(0..9).each_with_index do |frame, i|
-  point += if i == 9 && frames[i + 2]
-             frame.sum + frames[i + 1][0] + frames[i + 2][0]
-           elsif i == 9 && frames[i + 1]
-             frame.sum + frames[i + 1].sum
-           elsif i < 9 && frame[0] == 10 && frames[i + 1][0] == 10 && frames[i + 2][0]
-             frame.sum + frames[i + 1][0] + frames[i + 2][0]
-           elsif i < 9 && frame[0] == 10 && frames[i + 1]
-             frame.sum + frames[i + 1][0..1].sum
-           elsif i < 9 && frame.sum == 10 && frames[i + 1]
-             frame.sum + frames[i + 1][0]
-           else
-             frame.sum
-           end
+point = frames [0..9].each_with_index.sum do |frame, i|
+  next_frame = frames[i + 1]
+  point = if i == 9
+            if frames[i + 2]
+              frame.sum + next_frame[0] + frames[i + 2][0]
+            elsif next_frame
+              frame.sum + next_frame.sum
+            end
+          elsif i < 9
+            if frame[0] == 10
+              if next_frame[0] == 10 && frames[i + 2][0]
+                frame.sum + next_frame[0] + frames[i + 2][0]
+              elsif next_frame
+                frame.sum + next_frame[0..1].sum
+              end
+            elsif next_frame && frame.sum == 10
+              frame.sum + next_frame[0]
+            else
+              frame.sum
+            end
+          else
+            frame.sum
+          end
 end
 
 puts point
