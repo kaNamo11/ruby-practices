@@ -19,18 +19,16 @@ point = frames[0..9].each_with_index.sum do |frame, i|
   after_next_frame = frames[i + 2]
   if i == 9
     [frame, next_frame, after_next_frame].compact.flatten.sum
-  elsif i < 9
-    if frame[0] == 10
-      if next_frame[0] == 10 && after_next_frame[0]
-        frame.sum + next_frame[0] + after_next_frame[0]
-      elsif next_frame
-        frame.sum + next_frame[0..1].sum
-      end
-    elsif frame.sum == 10
-      frame.sum + next_frame[0]
+  elsif frame[0] == 10
+    if next_frame[0] == 10
+      frame.sum + next_frame[0] + after_next_frame[0]
     else
-      frame.sum
+      frame.sum + next_frame[0..1].sum
     end
+  elsif frame.sum == 10
+    frame.sum + next_frame[0]
+  else
+    frame.sum
   end
 end
 
