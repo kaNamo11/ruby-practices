@@ -1,14 +1,13 @@
 # frozen_string_literal: true
 
-# class MyLs
 DEFAULT_LINES = 3
 CHARCTOR_WIDTH = 20
+FILES = Dir.glob('*')
 
 def format_filenames(width)
-  files = Dir.glob('*').sort
   new_files = []
-  files.map do |file|
-    output_width = file.each_char.map { |c| c.bytesize == 1 ? 1 : 2 }.reduce(0, &:+)
+  FILES.map do |file|
+    output_width = file.each_char.map { |c| c.bytesize == 1 ? 1 : 2 }.sum
     padding_size = [0, width - output_width].max
     new_files << file + ' ' * padding_size
   end
@@ -39,7 +38,5 @@ def main
     end
   end
 end
-# end
 
-# my_ls = MyLs.new
 main
