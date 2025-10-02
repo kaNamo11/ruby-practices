@@ -2,10 +2,11 @@
 
 DEFAULT_LINES = 3
 CHARCTOR_WIDTH = 20
+FILES = Dir.glob('*')
 
-def format_filenames(width,files)
+def format_filenames(width)
   new_files = []
-  files.each do |file|
+  FILES.map do |file|
     output_width = file.each_char.map { |c| c.bytesize == 1 ? 1 : 2 }.sum
     padding_size = [0, width - output_width].max
     new_files << file + ' ' * padding_size
@@ -14,7 +15,7 @@ def format_filenames(width,files)
 end
 
 def fetch_file_names(number_of_lines)
-  files = format_filenames(CHARCTOR_WIDTH,Dir.glob('*'))
+  files = format_filenames(CHARCTOR_WIDTH)
   column = (files.count.to_f / number_of_lines).ceil
   files.count
 
