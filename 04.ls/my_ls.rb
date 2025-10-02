@@ -1,20 +1,30 @@
 # frozen_string_literal: true
 
 DEFAULT_LINES = 3
-CHARCTOR_WIDTH = 20
 
-def format_filenames(width,files)
+def main
+  file_names = format_filenames(Dir.glob('*'))
+  formatted_file_names = format(file_names,DEFAULT_LINES)
+  print_file_names(formatted_file_names[0],formatted_file_names[1])
+end
+
+#ファイルの名前の文字数を揃える
+def format_filenames(files)
   new_files = []
+  p file_name_max = files.max
+  p file_name_max_charsize = file_name_max.each_char.map { |c| c.bytesize == 1 ? 1 : 2 }.sum
+
   files.each do |file|
     output_width = file.each_char.map { |c| c.bytesize == 1 ? 1 : 2 }.sum
-    padding_size = [0, width - output_width].max
+    padding_size = [0, file_name_max_charsize - output_width].max
     new_files << file + ' ' * padding_size
   end
   new_files
 end
 
-def fetch_file_names(number_of_lines)
-  files = format_filenames(CHARCTOR_WIDTH,Dir.glob('*'))
+#ファイルを並び替える
+def format(files,number_of_lines)
+
   column = (files.count.to_f / number_of_lines).ceil
   files.count
 
@@ -23,9 +33,8 @@ def fetch_file_names(number_of_lines)
   [files, column]
 end
 
-def main
-  files, column = fetch_file_names(DEFAULT_LINES)
-
+#ファイルを表示する
+def print_file_names(files,column)
   if files.empty?
     puts ''
   else
