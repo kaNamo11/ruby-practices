@@ -10,7 +10,12 @@ end
 
 def format_filenames(files)
   new_files = []
-  file_name_max = files.max.each_char.map { |c| c.bytesize == 1 ? 1 : 2 }.sum
+ 
+  if files.empty?
+    exit
+  else
+    file_name_max = files.max.each_char.map { |c| c.bytesize == 1 ? 1 : 2 }.sum
+  end
 
   files.each do |file|
     output_width = file.each_char.map { |c| c.bytesize == 1 ? 1 : 2 }.sum
@@ -29,16 +34,12 @@ def format(files, number_of_lines)
 end
 
 def print_file_names(files, column)
-  if files.empty?
-    exit
-  else
     rows = files.each_slice(column).to_a
     result = rows.transpose
 
     result.each do |row|
       puts row.join(' ')
     end
-  end
 end
 
 main
