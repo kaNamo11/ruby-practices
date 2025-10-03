@@ -4,8 +4,8 @@ DEFAULT_LINES = 3
 
 def main
   file_names = format_filenames(Dir.glob('*'))
-  formatted_file_names = format(file_names,DEFAULT_LINES)
-  print_file_names(formatted_file_names[0],formatted_file_names[1])
+  formatted_file_names = format(file_names, DEFAULT_LINES)
+  print_file_names(formatted_file_names[0], formatted_file_names[1])
 end
 
 def format_filenames(files)
@@ -20,8 +20,7 @@ def format_filenames(files)
   new_files
 end
 
-def format(files,number_of_lines)
-
+def format(files, number_of_lines)
   column = (files.count.to_f / number_of_lines).ceil
 
   files.fill(nil, files.length...(number_of_lines * column))
@@ -29,7 +28,7 @@ def format(files,number_of_lines)
   [files, column]
 end
 
-def print_file_names(files,column)
+def print_file_names(files, column)
   if files.empty?
     exit
   else
