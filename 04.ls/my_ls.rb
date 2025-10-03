@@ -8,35 +8,30 @@ def main
   print_file_names(formatted_file_names[0],formatted_file_names[1])
 end
 
-#ファイルの名前の文字数を揃える
 def format_filenames(files)
   new_files = []
-  p file_name_max = files.max
-  p file_name_max_charsize = file_name_max.each_char.map { |c| c.bytesize == 1 ? 1 : 2 }.sum
+  file_name_max = files.max.each_char.map { |c| c.bytesize == 1 ? 1 : 2 }.sum
 
   files.each do |file|
     output_width = file.each_char.map { |c| c.bytesize == 1 ? 1 : 2 }.sum
-    padding_size = [0, file_name_max_charsize - output_width].max
-    new_files << file + ' ' * padding_size
+    padding_size = [0, file_name_max - output_width].max
+    new_files << "#{file}#{' ' * padding_size}"
   end
   new_files
 end
 
-#ファイルを並び替える
 def format(files,number_of_lines)
 
   column = (files.count.to_f / number_of_lines).ceil
-  files.count
 
   files.fill(nil, files.length...(number_of_lines * column))
 
   [files, column]
 end
 
-#ファイルを表示する
 def print_file_names(files,column)
   if files.empty?
-    puts ''
+    exit
   else
     rows = files.each_slice(column).to_a
     result = rows.transpose
