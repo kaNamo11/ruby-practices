@@ -13,11 +13,11 @@ def format_filenames(files)
  
   exit if files.empty?
     
-  file_name_max = files.max.each_char.map { |c| c.bytesize == 1 ? 1 : 2 }.sum
+  max_file_name_length = files.max.each_char.map { |c| c.bytesize == 1 ? 1 : 2 }.sum
 
   files.each do |file|
     output_width = file.each_char.map { |c| c.bytesize == 1 ? 1 : 2 }.sum
-    padding_size = [0, file_name_max - output_width].max
+    padding_size = [0, max_file_name_length - output_width].max
     new_files << "#{file}#{' ' * padding_size}"
   end
   new_files
