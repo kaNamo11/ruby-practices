@@ -9,7 +9,6 @@ def main
 end
 
 def pad_filenames(files)
-
   exit if files.empty?
   file_names_with_length = files.map do |file|
     {
