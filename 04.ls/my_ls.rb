@@ -9,7 +9,6 @@ def main
 end
 
 def format_filenames(files)
-  new_files = []
 
   exit if files.empty?
   file_names_with_length = files.map do |file|
@@ -21,14 +20,12 @@ def format_filenames(files)
 
   max_file_name_length = file_names_with_length.max_by { |h| h[:length] }[:length]
 
-  file_names_with_length.each do |hash|
+  file_names_with_length.map do |hash|
     name = hash[:name]
     output_width = hash[:length]
     padding_size = [0, max_file_name_length - output_width].max
-    new_files << "#{name}#{' ' * padding_size}"
+    "#{name}#{' ' * padding_size}"
   end
-
-  new_files
 end
 
 def format(files, number_of_lines)
