@@ -3,12 +3,12 @@
 DEFAULT_LINES = 3
 
 def main
-  file_names = format_filenames(Dir.glob('*'))
-  formatted_file_names = format(file_names, DEFAULT_LINES)
+  file_names = pad_filenames(Dir.glob('*'))
+  formatted_file_names = convert_filenames_to_matrix(file_names, DEFAULT_LINES)
   print_file_names(formatted_file_names[0], formatted_file_names[1])
 end
 
-def format_filenames(files)
+def pad_filenames(files)
 
   exit if files.empty?
   file_names_with_length = files.map do |file|
@@ -28,7 +28,7 @@ def format_filenames(files)
   end
 end
 
-def format(files, number_of_lines)
+def convert_filenames_to_matrix(files, number_of_lines)
   column = (files.count.to_f / number_of_lines).ceil
 
   files.fill(nil, files.length...(number_of_lines * column))
