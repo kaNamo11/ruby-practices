@@ -3,8 +3,8 @@
 DEFAULT_LINES = 3
 
 def main
-  file_names = pad_filenames(Dir.glob('*'))
-  formatted_file_names = convert_filenames_to_matrix(file_names, DEFAULT_LINES)
+  filenames_matrix = pad_filenames(Dir.glob('*'))
+  formatted_file_names = convert_filenames_to_matrix(filenames_matrix, DEFAULT_LINES)
   print_file_names(formatted_file_names[0], formatted_file_names[1])
 end
 
