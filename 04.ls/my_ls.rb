@@ -1,9 +1,21 @@
 # frozen_string_literal: true
+require 'optparse'
 
 DEFAULT_LINES = 3
 
 def main
-  filenames_matrix = pad_filenames(Dir.glob('*'))
+#オプションの設定
+  opt = OptionParser.new
+  params = {}
+  opt.on('-a') {|v| params[:a] = v }
+  opt.parse!(ARGV)
+  
+  if  params[:a]
+    filenames_matrix = pad_filenames(Dir.glob(["**/*", "**/.*", ".", ".."], File::FNM_DOTMATCH)).uniq
+  else 
+    filenames_matrix = pad_filenames(Dir.glob("*"))
+  end
+
   formatted_file_names = convert_filenames_to_matrix(filenames_matrix, DEFAULT_LINES)
   print_file_names(formatted_file_names[0], formatted_file_names[1])
 end
