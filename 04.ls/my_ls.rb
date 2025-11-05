@@ -11,7 +11,7 @@ def main
   opt.parse!(ARGV)
 
   filenames_matrix = if params[:a]
-                       pad_filenames(Dir.glob(['**/*', '**/.*', '**/.', '**/..'], File::FNM_DOTMATCH)).uniq
+                       pad_filenames(Dir.glob(['*', '.*'], File::FNM_DOTMATCH)).uniq
                      else
                        pad_filenames(Dir.glob('*'))
                      end
