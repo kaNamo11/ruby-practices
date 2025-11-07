@@ -10,12 +10,9 @@ def main
   opt.on('-a') { |v| params[:a] = v }
   opt.parse!(ARGV)
 
-  filenames_matrix = if params[:a]
-                       pad_filenames(Dir.glob('*', File::FNM_DOTMATCH))
-                     else
-                       pad_filenames(Dir.glob('*'))
-                     end
+  flags = params[:a] ? File::FNM_DOTMATCH : 0
 
+  filenames_matrix = pad_filenames(Dir.glob('*', flags))
   formatted_file_names = convert_filenames_to_matrix(filenames_matrix, DEFAULT_LINES)
   print_file_names(formatted_file_names[0], formatted_file_names[1])
 end
