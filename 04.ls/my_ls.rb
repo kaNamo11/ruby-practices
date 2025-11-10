@@ -7,12 +7,12 @@ DEFAULT_LINES = 3
 def main
   opt = OptionParser.new
   params = {}
+  opt.on('-r') { |v| params[:r] = v }
   opt.on('-a') { |v| params[:a] = v }
   opt.parse!(ARGV)
 
   flags = params[:a] ? File::FNM_DOTMATCH : 0
-
-  filenames_matrix = pad_filenames(Dir.glob('*', flags))
+  filenames_matrix = params[:r] ? pad_filenames(Dir.glob('*', flags)).reverse : pad_filenames(Dir.glob('*', flags))
   formatted_file_names = convert_filenames_to_matrix(filenames_matrix, DEFAULT_LINES)
   print_file_names(formatted_file_names[0], formatted_file_names[1])
 end
@@ -47,7 +47,6 @@ end
 def print_file_names(files, column)
   rows = files.each_slice(column).to_a
   result = rows.transpose
-
   result.each do |row|
     puts row.join(' ')
   end
