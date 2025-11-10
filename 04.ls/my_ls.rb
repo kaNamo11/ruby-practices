@@ -1,5 +1,4 @@
 # frozen_string_literal: true
-
 require 'optparse'
 
 DEFAULT_LINES = 3
@@ -7,14 +6,15 @@ DEFAULT_LINES = 3
 def main
   opt = OptionParser.new
   params = {}
-  opt.on('-a') { |v| params[:a] = v }
+  opt.on('-r'){ |v| params[:r] = v }
   opt.parse!(ARGV)
 
-  flags = params[:a] ? File::FNM_DOTMATCH : 0
+  filenames_matrix =  params[:r] ? pad_filenames(Dir.glob('*')).reverse : pad_filenames(Dir.glob('*'))
 
-  filenames_matrix = pad_filenames(Dir.glob('*', flags))
+  #filenames_matrix = pad_filenames(Dir.glob('*'))
   formatted_file_names = convert_filenames_to_matrix(filenames_matrix, DEFAULT_LINES)
   print_file_names(formatted_file_names[0], formatted_file_names[1])
+
 end
 
 def pad_filenames(files)
@@ -47,7 +47,6 @@ end
 def print_file_names(files, column)
   rows = files.each_slice(column).to_a
   result = rows.transpose
-
   result.each do |row|
     puts row.join(' ')
   end
