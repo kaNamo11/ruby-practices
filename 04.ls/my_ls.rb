@@ -14,7 +14,7 @@ def main
   flags = params[:a] ? File::FNM_DOTMATCH : 0
   filenames = Dir.glob('*', flags)
   filenames.reverse! if params[:r]
-  filenames_matrix = pad_filenames(filenames) 
+  filenames_matrix = pad_filenames(filenames)
   formatted_file_names = convert_filenames_to_matrix(filenames_matrix, DEFAULT_LINES)
   print_file_names(formatted_file_names[0], formatted_file_names[1])
 end
